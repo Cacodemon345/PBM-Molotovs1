@@ -1,0 +1,22 @@
+UZIFIRE		UZIFIRE
+UZICI		UZICI
+UZICO		UZICO
+UZIBOLT		UZIBOLT
+
+weapons/m50_pickup		M50PICK
+weapons/m50_fire		M50FIRE
+weapons/m50_fire2		M50FIRE2
+weapons/m50_boltopen	M50BOLT1
+weapons/m50_boltclose	M50BOLT2
+weapons/m50_zoomin		M50ZI
+weapons/m50_zoomout		M50ZO
+weapons/m50_out			M50OUT
+weapons/m50_in			M50IN
+
+weapons/m55_fire		M55FIRE
+weapons/m55_fire2		M55FIRE2
+weapons/m55_out			M55OUT
+weapons/m55_in			M55IN
+weapons/m55_pickup		M55PICK
+
+items/cartridge_pick    CARTPICK

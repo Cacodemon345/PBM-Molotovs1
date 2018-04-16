@@ -1,0 +1,11 @@
+#library "GrenadeCheck"
+#include "zcommon.acs"
+
+Script "CheckGrenade" (void)
+{
+	if (CheckInventory("SGLSelected")==1)
+	GiveInventory("IsBouncingGrenade", 1);
+	else
+	Print(s:"Only available for Super Grenade Launcher");
+	Delay(1);
+}

@@ -1,0 +1,56 @@
+class Archvile2 : Archvile {}
+//Cacodemon345: ZScript Inheritance hack to allow DECORATE Archvile and Hellion 
+//to use the new function
+
+class Shotgun2 : Shotgun
+{
+States
+	{
+	Fire:
+		SHTG A 3 Fast;
+		SHTG A 7 Fast { 
+		A_FireBullets (5.6, 0, 7, 5, "BulletPuff",1,0,"Tracer", 0);
+		A_PlaySound ("weapons/shotgf", CHAN_WEAPON);
+		A_GunFlash();
+		}
+		SHTG BC 5 Fast;
+		SHTG D 4 Fast;
+		SHTG CB 5 Fast;
+		SHTG A 3 Fast;
+		SHTG A 7 Fast A_ReFire;
+		Goto Ready;
+	}
+}
+
+extend class Archvile2
+{
+	void A_VileAttack2(sound snd = "vile/stop", int initialdmg = 20, int blastdmg = 70, int blastradius = 70, double thrust = 1.0, name damagetype = "Fire", int flags = 0)
+	{
+		Actor targ = target;
+		if (targ)
+		{
+			A_FaceTarget();
+			if (!CheckSight(targ, 0)) return;
+			A_PlaySound(snd, CHAN_WEAPON);
+			int newdam = targ.DamageMobj (self, self, initialdmg, (flags & VAF_DMGTYPEAPPLYTODIRECT)? damagetype : 'none');
+
+			targ.TraceBleed (newdam > 0 ? newdam : initialdmg, self);
+			
+			Actor fire = tracer;
+			if (fire)
+			{
+				// move the fire between the vile and the player
+				fire.SetOrigin(targ.Vec3Angle(-24., angle, 0), true);
+				fire.A_Explode(blastdmg, blastradius, XF_NOSPLASH, false, 0, 0, 0, "BulletPuff", damagetype);
+				fire.A_SpawnProjectile("FireworkSFXType2", 64, 0, random (0, 360), 2, random (30, 60));
+				fire.A_SpawnProjectile("FireworkSFXType2", 64, 0, random (0, 360), 2, random (30, 60));
+				fire.A_SpawnProjectile("FireworkSFXType2", 64, 0, random (0, 360), 2, random (30, 60));
+				fire.A_SpawnProjectile("FireworkSFXType2", 64, 0, random (0, 360), 2, random (30, 60));
+			}
+			if (!targ.bDontThrust)
+			{
+				targ.Vel.z = thrust * 1000 / max(1, targ.Mass);
+			}
+		}
+	}
+}

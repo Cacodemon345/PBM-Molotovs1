@@ -1,0 +1,9 @@
+addkeysection "Molotov Key" Molotov
+addmenukey "Throw Molotov" MolotovThrow
+alias MolotovThrow "pukename Molotov"
+defaultbind P MolotovThrow
+
+addkeysection "Bouncing Grenade" Molotov
+addmenukey "Switch Special Grenades" GrenadeSwitch
+alias GrenadeSwitch "pukename CheckGrenade"
+defaultbind O MolotovThrow

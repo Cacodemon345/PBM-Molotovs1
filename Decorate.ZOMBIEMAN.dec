@@ -1,0 +1,12 @@
+
+ACTOR Zombie_Man2: Zombie_Man Replaces Zombie_Man
+{
+	Monster
+	+FLOORCLIP
+	+SLIDESONWALLS
+	+THRUSPECIES
+	+MTHRUSPECIES
+	Species "ZombieFlyer"
+	FriendlySeeBlocks 50
+}
+
