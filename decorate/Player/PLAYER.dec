@@ -1495,10 +1495,14 @@ ACTOR Doomer : PlayerPawn Replaces DoomPlayer
 		TNT1 A 0 A_JumpIfInventory("LavaSplasherz", 1, "LavaSplash")
 		Goto StandStill
 	
+	DontRoll:
+	TNT1 A 0 A_Print("Rolling not available in Traditional Mode!")
+	Goto StandStill
 	
 	RollRight:
 		NULL A 0 A_TakeInventory("RollLeft")
 		NULL A 0 A_TakeInventory("RollRight")
+		NULL A 0 A_JumpIfInventory("IsPlayingAsTraditional", 1, "DontRoll")
 		NULL A 0 A_ChangeFlag ("NOPAIN", 1)
 	
 		NULL A 0 ACS_ExecuteAlways(477, 0, 0, 0, 0)//Start Camera//Start Camera
@@ -1527,6 +1531,7 @@ ACTOR Doomer : PlayerPawn Replaces DoomPlayer
 	RollLeft:
 		NULL A 0 A_TakeInventory("RollLeft")
 		NULL A 0 A_TakeInventory("RollRight")
+		NULL A 0 A_JumpIfInventory("IsPlayingAsTraditional", 1, "DontRoll")
 		NULL A 0 A_ChangeFlag ("NOPAIN", 1)
 	
 		NULL A 0 ACS_ExecuteAlways(477, 0, 0, 0, 0)//Start Camera//Start Camera
