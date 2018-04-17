@@ -1557,6 +1557,7 @@ Actor M55NitroTracer : Tracer
 Speed 500
 Damage 90
 Decal "Scorch"
+Damagetype "ExplosiveImpact"
 states
 	{
 	Death:

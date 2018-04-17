@@ -1520,6 +1520,7 @@ Actor NitroTracer : Tracer
 Speed 500
 Damage 45
 Decal "Scorch"
+Damagetype "ExplosiveImpact"
 states
 	{
 	Death:
