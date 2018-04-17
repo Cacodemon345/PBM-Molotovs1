@@ -542,7 +542,7 @@ DamageFactor "bloodsplasher", 0.0    DamageFactor "tinybloodsplasher", 0.0    Da
   MissileContinue:
 	TNT1 A 0 A_JumpIfInTargetInventory("TargetIsAMarine", 1, "ForgetTarget")
 
-	TNT1 A 0 A_Jump(33, "MissileContinue1")
+	TNT1 A 0 A_Jump(128,"MissileContinue" , "MissileContinue1")
     SNPS A 8 A_FaceTarget
 	TNT1 A 0 A_Playsound("weapons/m50_fire")
     TNT1 A 0 A_CustomMissile("MarineMuzzle1", 42, 6)
@@ -552,13 +552,13 @@ DamageFactor "bloodsplasher", 0.0    DamageFactor "tinybloodsplasher", 0.0    Da
 	
 	TNT1 A 0 A_MonsterRefire(48, "See")
     Goto MissileContinue
-    MissileContinue1:
-	//TNT1 A 0 A_JumpIfInTargetInventory("TargetIsAMarine", 1, "ForgetTarget")
+   MissileContinue1:
+	TNT1 A 0 A_JumpIfInTargetInventory("TargetIsAMarine", 1, "ForgetTarget")
 
     SNPS A 8 A_FaceTarget
 	TNT1 A 0 A_Playsound("weapons/m50_fire")
     TNT1 A 0 A_CustomMissile("MarineMuzzle1", 42, 6)
-    SNPS A 4 bright A_CustomMissile("M55NitroTracer",0,0)
+    SNPS A 4 bright A_CustomMissile("SniperNitroTracer",0,0)
 	
 	SNPS A 20
 	
@@ -589,4 +589,9 @@ ACTOR SniperTracer : Tracer
 		TNT1 A 0 A_SpawnItemEx("HitPuff")
 		Stop
 	}
+}
+
+Actor SniperNitroTracer : M55NitroTracer
+{
+	Damagetype ExplosiveImpact
 }

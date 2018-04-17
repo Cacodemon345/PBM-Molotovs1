@@ -56,20 +56,20 @@ Actor ChaingunWeaponSpawner Replaces Chaingun
 			TNT1 A 0 A_Jump(256, "SpawnMinigun")
 		DiceTier3:
 			TNT1 A 0 A_Jump(8, "SpawnCarbine")
-			TNT1 A 0 A_Jump(10, "SpawnSMG", "SpawnUZI")
+			TNT1 A 0 A_Jump(15, "SpawnSMG", "SpawnUZI")
 			TNT1 A 0 A_Jump(30, "SpawnM50")
 			TNT1 A 0 A_Jump(48, "SpawnHeavyMachinegun")
 			TNT1 A 0 A_Jump(256, "SpawnMinigun")
 		DiceTier4:
 			TNT1 A 0 A_Jump(32, "SpawnHeavyMachinegun")
-			TNT1 A 0 A_Jump(10, "SpawnSMG", "SpawnUZI")
+			TNT1 A 0 A_Jump(20, "SpawnSMG", "SpawnUZI")
 			TNT1 A 0 A_Jump(35, "SpawnM50")
 			TNT1 A 0 A_Jump(18, "SpawnTriMinigun", "SpawnLMG")
 			TNT1 A 0 A_Jump(256, "SpawnMinigun")
 		DiceDeathWish:
 			TNT1 A 0 A_Jump(40, "SpawnHeavyMachinegun")
 			TNT1 A 0 A_Jump(50, "SpawnM50")
-			TNT1 A 0 A_Jump(18, "SpawnSMG", "SpawnUZI")
+			TNT1 A 0 A_Jump(36, "SpawnSMG", "SpawnUZI")
 			TNT1 A 0 A_Jump(22, "SpawnTriMinigun", "SpawnLMG")
 			TNT1 A 0 A_Jump(256, "SpawnMinigun")
 	SpawnLMG:

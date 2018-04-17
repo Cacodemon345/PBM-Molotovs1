@@ -32,6 +32,8 @@ States
 		PLSE A 0 A_Explode(6,50,0, 0, 50, 0, 0, "HitPuff", "SSG")
 		PLSE ABCDE 4 Bright
 		Stop
+	Death.Ice:
+		Goto Actor::GenericFreezeDeath
 	Bounce:
 		TNT1 A 0 A_ChangeFlag("NORADIUSDAMAGE", 1)
 		PLSE A 0 A_Explode(6, 50, 0, 0, 50, 0, 0, "HitPuff", "SSG")
