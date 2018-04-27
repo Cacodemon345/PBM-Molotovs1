@@ -1,5 +1,5 @@
 //ASSAULT RIFLES (c) 2014 SGT MARK IV tm... And a bit of Pa1nki113r (R)
-ACTOR DualAutoShotguns: DualPBWeapons
+ACTOR DualAutoShotguns: DualPBWeapon
 {
 	Weapon.BobRangeX 0.3
 	Weapon.BobRangeY 0.5
