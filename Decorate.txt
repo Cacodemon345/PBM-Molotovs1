@@ -1,3 +1,5 @@
+//#include "decorate/Weapons/BaseWeapon.txt"
+
 actor DemonVision1 : PowerLightAmp
 {
 	Powerup.Color GreenMap
@@ -9,7 +11,227 @@ Actor DemonVision2 : PowerLightAmp
 Powerup.Color BlueMap, 0.23
 Powerup.Duration 2500
 }
+Actor Green_FlyingBloodFake : Brutal_FlyingBloodFake
+{
+Translation	"168:191=112:127", "16:47=123:127"
+Decal GreenBloodSplat
+}
+ACTOR GreenMeatDeathSmall: ImpXDeath
+{
+Decal GreenBloodSplat
+    States
+    {
+    Spawn:
+		TNT1 AA 0 A_CustomMissile ("XDeath1Green", 5, 0, random (0, 360), 2, random (0, 160))
+		 TNT1 AA 0 A_CustomMissile ("XDeath2bGreen", 5, 0, random (0, 360), 2, random (0, 160))
+		 TNT1 AA 0 A_CustomMissile ("XDeath3bGreen", 5, 0, random (0, 360), 2, random (0, 160))
+		 TNT1 AAAA 0 A_CustomMissile ("Green_FlyingBlood", 10, 0, random (0, 360), 2, random (40, 90))
+		 TNT1 A 0 A_CustomMissile ("XDeathSkinPiece2Green", 5, 0, random (0, 360), 2, random (0, 160))
+		 TNT1 A 0 A_CustomMissile ("XDeathSkinPiece1Green", 5, 0, random (0, 360), 2, random (0, 160))
+		 TNT1 AAAAAAAA 0 A_CustomMissile ("GreenSmallSuperGore", 10, 0, random (0, 360), 2, random (10, 170))
+		 TNT1 AAAA 0 A_CustomMissile ("GreenBloodMistSmall", 35, 0, random (0, 360), 2, random (40, 90))
+		Stop
+    }
+}
+ACTOR XDeathSkinPiece1Green: Xdeath1Green
+{
+    Radius 2
+    Height 2
+    Speed 10
+    Scale 1.0
+	Mass 1
+    SeeSound "none"
+    DeathSound "none"
+	Mass 1
+	Decal GreenBloodSplat
+    States
+    {
+    Spawn:
+	    TNT1 A 0 A_JumpIf(waterlevel > 1, "Underwater")
+        XSKI A 4
+        Loop
+    Death:
+        XSKI B 1
+		TNT1 A 0 A_QueueCorpse
+        XSKI B -1
+        Stop
+        TNT1 A 1
+     Underwater:
+	 Splash:
+	    Goto Death
+    }
+}	
 
+
+ACTOR XDeathSkinPiece2Green: Xdeath1Green
+{
+    Radius 2
+    Height 2
+    Speed 10
+    Scale 1.0
+	Mass 1
+    SeeSound "none"
+    DeathSound "none"
+	Mass 1
+	Decal GreenBloodSplat
+    States
+    {
+    Spawn:
+	    TNT1 A 0 A_JumpIf(waterlevel > 1, "Underwater")
+        XSKI C 4
+        Loop
+    Death:
+        XSKI D 1
+		TNT1 A 0 A_QueueCorpse
+        XSKI D -1
+        Stop
+        TNT1 A 1
+     Underwater:
+	 Splash:
+	    Goto Death
+    }
+}
+actor CrashingFlier11 replaces CrashingFlier
+{
+     SeeSound ""
+     +NOCLIP
+     Speed 3
+     MissileHeight 0
+     States
+     {
+     Spawn:
+         FLYC AAA 2 Bright A_CustomMissile ("FlamethrowerFireParticles", 32, 0, random (0, 360), 2, random (0, 180))
+		 TNT1 A 0 A_CustomMissile("BarrelKaboom",random (-20,20),random (-30,30),random (-359,359))
+		 TNT1 A 0 A_Explode(128,128,0,0,true,0,0, "HitPuff", "ExplosiveImpact")
+		TNT1 A 0 A_CustomMissile ("MetalShard2", 5, 0, random (0, 360), 2, random (30, 160))
+         FLYC A 1 A_CustomMissile("CrashingFlier21", 0, 0, 75)
+         TRAN A -1
+         Stop
+     }
+}
+Actor GreenSuperGoreMist: GreenSuperGore
+{
+Scale 1.0
+Speed 8
+Gravity 0.3
+}
+
+Actor GreenSuperGoreMistSmall: GreenSuperGore
+{
+Scale 0.35
+Speed 2
+Gravity 0.1
+}
+
+Actor GreenSuperGoreMistTiny: GreenSuperGore
+{
+Scale 0.15
+Speed 1
+Gravity 0.1
+}
+actor GreenSmallSuperGore : SmallSuperGore
+{
+Decal GreenBloodSplat
+Translation	"168:191=112:127", "16:47=123:127"
+}
+actor GreenSmallSuperGore2: GreenSmallSuperGore
+{
+Alpha 0.3
+Scale 0.6
+Speed 1
+}
+
+
+actor GreenMediumSuperGore: GreenSmallSuperGore
+{
+Scale 2.0
+Speed 4
+}
+
+
+
+actor GiantGreenSuperGore: GreenSmallSuperGore
+{
+Scale 4.0
+Speed 8
+}
+
+actor CrashingFlier21
+{
+     SeeSound ""
+     +NOCLIP
+     Speed 3
+     MissileHeight 0
+     States
+     {
+     Spawn:
+         FLYC AAA 2 Bright A_CustomMissile ("FlamethrowerFireParticles", 32, 0, random (0, 360), 2, random (0, 180))
+		 TNT1 A 0 A_CustomMissile("BarrelKaboom",random (-20,20),random (-30,30),random (-359,359))
+		 TNT1 A 0 A_Explode(128,128,0,0,true,0,0, "HitPuff", "ExplosiveImpact")
+		TNT1 A 0 A_CustomMissile ("MetalShard1", 5, 0, random (0, 360), 2, random (30, 160))
+         FLYC A 1 A_CustomMissile("CrashingFlier31", 0, 0, 75)
+         FLYC A 0 A_Explode(32,64)
+         TRAN A -1
+         Stop
+     }
+}
+
+actor CrashingFlier31
+{
+     SeeSound ""
+     +NOCLIP
+     Speed 3
+     MissileHeight 0
+     States
+     {
+     Spawn:
+         FLYC AAA 2 Bright A_CustomMissile ("FlamethrowerFireParticles", 32, 0, random (0, 360), 2, random (0, 180))
+		 TNT1 A 0 A_CustomMissile("BarrelKaboom",random (-20,20),random (-30,30),random (-359,359))
+		 TNT1 A 0 A_Explode(128,128,0,0,true,0,0, "HitPuff", "ExplosiveImpact")
+		 TNT1 A 0 A_CustomMissile ("MetalShard3", 5, 0, random (0, 360), 2, random (30, 160))
+         FLYC A 1 A_CustomMissile("CrashingFlier41", 0, 0, 75)
+         TRAN A -1
+         Stop
+     }
+}
+
+actor CrashingFlier41
+{
+     SeeSound ""
+     +NOCLIP
+     Speed 3
+     MissileHeight 0
+     States
+     {
+     Spawn:
+         FLYC AAA 2 Bright A_CustomMissile ("FlamethrowerFireParticles", 32, 0, random (0, 360), 2, random (0, 180))
+		 TNT1 A 0 A_CustomMissile("BarrelKaboom",random (-20,20),random (-30,30),random (-359,359))
+		 TNT1 A 0 A_Explode(128,128,0,0,true,0,0, "HitPuff", "ExplosiveImpact")
+		 TNT1 A 0 A_CustomMissile ("MetalShard1", 5, 0, random (0, 360), 2, random (30, 160))
+         FLYC A 1 A_CustomMissile("CrashingFlier51", 0, 0, 75)
+         TRAN A -1
+         Stop
+     }
+}
+
+actor CrashingFlier51
+{
+     SeeSound ""
+     +NOCLIP
+     Speed 3
+     MissileHeight 0
+     States
+     {
+     Spawn:
+         FLYC AAA 3 Bright A_CustomMissile ("FlamethrowerFireParticles", 32, 0, random (0, 360), 2, random (0, 180))
+		 TNT1 A 0 A_CustomMissile("BarrelKaboom",random (-20,20),random (-30,30),random (-359,359))
+		 TNT1 A 0 A_Explode(128,128,0,0,true,0,0, "HitPuff", "ExplosiveImpact")
+		 TNT1 A 0 A_CustomMissile ("MetalShard1", 5, 0, random (0, 360), 2, random (30, 160))
+         FLYC A 1 A_CustomMissile("CrashingFlier6", 0, 0, 75)
+         TRAN A -1
+         Stop
+     }
+}
 Actor NaziHelperDog : MBFHelperDog
 {
 	Health 100
@@ -20,6 +242,21 @@ Actor NaziHelperDog : MBFHelperDog
 		DOGS AAAABBBBCCCCDDDD 1 A_Chase
 		Loop
 	}
+}
+
+Actor HasBlueTorch : Inventory
+{
+	Inventory.MaxAmount 1
+}
+
+Actor HasRedTorch : Inventory
+{
+	Inventory.MaxAmount 1
+}
+
+Actor HasGreenTorch : Inventory
+{
+	Inventory.MaxAmount 1
 }
 
 Actor IsOnWolfenstein : Inventory
@@ -96,22 +333,59 @@ Actor PinkySpawner1 : PinkySpawner replaces PinkySpawner
 	}
 }
 
+Actor Rocket1 : Rocket
+{
+BounceType "Hexen"
++USEBOUNCESTATE
++BOUNCEONACTORS
++BOUNCEONWALLS
+BounceFactor 0.05
+//+SEEKERMISSILE
++FORCERADIUSDMG
+-BOUNCEAUTOOFF
++FRIENDLY
++SHOOTABLE
+-NOBLOCKMAP
++NOTARGETSWITCH
+Health 999999
+States
+{
+Spawn:	
+		MISL A 1 Bright A_SeekerMissile(0, 8,SMF_PRECISE | SMF_LOOK)
+		Loop
+Bounce:
+		TNT1 A 0 A_PlaySound("weapons/rocklx", 0)
+		MISL B 8 Bright { A_Explode;
+						  A_SeekerMissile(0, 8,SMF_PRECISE | SMF_LOOK);
+						  ACS_EXECUTE(295,0);
+						  }
+		MISL C 6 Bright A_SeekerMissile(0, 90,SMF_PRECISE | SMF_LOOK)
+		MISL D 4 Bright A_SeekerMissile(0, 90,SMF_PRECISE | SMF_LOOK)
+		Goto Spawn
+	Death:
+		MISL B 8 Bright A_Explode
+		MISL C 6 Bright
+		MISL D 4 Bright
+		Stop
+		}
+}
+
 Actor Shotgun3 : Shotgun
 {
 States
 	{
 	Fire:
-		SHTG A 2 
-		SHTG A 3  { 
-		A_FireBullets (5.6, 0, 7, 5, "BulletPuff",1,0,"Tracer", 0);
+		SHTG A random(1,3)  
+		SHTG BC random(1,2)
+		SHTG D random(1,2) 
+		SHTG CB random(1,3) 
+		SHTG A random(1,2)  { 
+		A_FireBullets (0, 0, 7, 5, "ShotPuff",1,0,"Tracer", 0);
 		A_PlaySound ("weapons/shotgf", CHAN_WEAPON);
 		A_GunFlash;
 		}
-		SHTG BC 2 
-		SHTG D 2 
-		SHTG CB 3 
-		SHTG A 2 
-		SHTG A 3  A_ReFire
+		SHTG A random(1,2) 
+		SHTG A random(1,3) A_ReFire
 		Goto Ready
 	}
 }
@@ -501,7 +775,7 @@ DamageFactor "bloodsplasher", 0.0    DamageFactor "tinybloodsplasher", 0.0    Da
   +STANDSTILL
   +MISSILEMORE
   +MISSILEEVENMORE
-  FriendlySeeBlocks 32
+  //FriendlySeeBlocks 32
   states
   {
   Spawn:

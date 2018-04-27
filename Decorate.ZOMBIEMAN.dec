@@ -7,6 +7,6 @@ ACTOR Zombie_Man2: Zombie_Man Replaces Zombie_Man
 	+THRUSPECIES
 	+MTHRUSPECIES
 	Species "ZombieFlyer"
-	FriendlySeeBlocks 50
+	//FriendlySeeBlocks 50
 }
 
