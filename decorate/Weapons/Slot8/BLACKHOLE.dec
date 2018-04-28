@@ -21,10 +21,10 @@ Obituary "%o got vaporized by %k's Black Hole Generator."
 Tag "Black Hole Generator"
 States
 {
-Spawn:
-	PRDC Z -1
-	Stop
-Select:
+	Spawn:
+		PRDC Z -1
+		Stop
+	Select:
 		TNT1 A 0 A_Overlay(-10, "FirstPersonLegsStand")
 		TNT1 A 0 A_TakeInventory("RifleSelected",1)
 		TNT1 A 0 A_TakeInventory("CarbineSelected",1)
@@ -70,42 +70,27 @@ Select:
 		TNT1 AAAAAAAAAAAAAAAAAA 0 A_Raise
 		TNT1 AAAAAAAA 1 A_Raise
 		Wait
-Deselect:
-	TNT1 A 0 A_StopSound(6)
+	Deselect:
+		TNT1 A 0 A_StopSound(6)
 		TNT1 A 0 A_JumpIfInventory("GotMeatShield", 1, "GrabEnemy")
-	PRDC UVWX 1 
+		PRDC UVWX 1 
 		TNT1 AAAAAAAAAAAAAAAAAA 0 A_Lower
-	Wait
+		Wait
 
 	
-Steady:
-	TNT1 A 0 A_StopSound(6)
-	TNT1 A 0 A_Takeinventory("SKZombieman", 2)
-	TNT1 A 0 A_Takeinventory("SKShotgunguy", 2)
-	TNT1 A 0 A_Takeinventory("SKChaingunguy", 2)
-	TNT1 A 0 A_Takeinventory("SKImp", 2)
-	TNT1 A 0 A_Takeinventory("GoFatality", 2)
-	TNT1 A 1
-	Goto Ready
+	Steady:
+		TNT1 A 0 A_StopSound(6)
+		TNT1 A 0 A_Takeinventory("SKZombieman", 2)
+		TNT1 A 0 A_Takeinventory("SKShotgunguy", 2)
+		TNT1 A 0 A_Takeinventory("SKChaingunguy", 2)
+		TNT1 A 0 A_Takeinventory("SKImp", 2)
+		TNT1 A 0 A_Takeinventory("GoFatality", 2)
+		TNT1 A 1
+		Goto Ready
 	
 	GoToPurist:
 		TNT1 A 0 A_SelectWeapon("HellishMissileLauncher")
 		Goto Select
-	
-	LedgeClimb:
-		TNT1 A 0 A_TakeInventory("Zoomed",1)
-        TNT1 A 0 A_ZoomFactor(1.0)
-		TNT1 A 0 A_TakeInventory("ADSmode",1)
-		TNT1 A 0 A_Playsound("ledgeclimb")
-		TNT1 A 0 A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0)
-		TNT1 A 0 A_SetPitch(-5)
-		CL1M FDCCDFHIK 1 A_SetPitch(-4)
-		TNT1 A 0 A_TakeInventory("Climbed_Ledge", 5000)
-		TNT1 A 0 A_TakeInventory("Grabbing_A_Ledge", 5000)
-		Goto Ready+8
-		
-		
-
 	
 	Ready:
 		TNT1 A 0 A_JumpIfInventory("IsPlayingAsPurist", 1, "GoToPurist")
@@ -118,7 +103,7 @@ Steady:
 	    TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
         TNT1 A 0 
         TNT1 AAAAA 0
-		
+	Ready3:
 		TNT1 A 0 A_PlaySound("DSNUKBID", 6, 1, 1)
         TNT1 A 0 A_JumpIfInventory("Grabbing_A_Ledge",1,"LedgeClimb")
         TNT1 A 0 A_JumpIfInventory("Kicking",1,"DoKick")
@@ -348,10 +333,6 @@ Flash:
 		PRDC U 1 
 		PRDC UUU 1 
 		Stop
-		
-	////////////////////////////////////////////////KNIFE COMBO//////////////////////////////////////////////////////////////
-		
-
 }
 }
 

@@ -1,46 +1,106 @@
-#include "decorate/Weapons/Slot0/MP40.dec"
-#include "decorate/Weapons/Slot0/MG42.dec"
-#include "decorate/Weapons/Slot9/FlameCannon.dec"
-
-Actor HasRailgun: Inventory
+Actor PBWeapon : Chainsaw
 {
-Inventory.MaxAmount 1
-}
-
-ACTOR HellishMissileLauncher : Weapon
-{
-Weapon.BobRangeX 0.3
+	Weapon.BobRangeX 0.3
 	Weapon.BobRangeY 0.5
 	Weapon.BobStyle InverseSmooth
 	Weapon.BobSpeed 2.4
-	+FLOORCLIP
-	+DONTGIB
-	Height 20
-	//Weapon.SelectionOrder 2800
-	Weapon.AmmoUse1 1
-	Weapon.AmmoUse2 1
-	Weapon.AmmoGive 8
-	Weapon.AmmoType1 "MiniHellRocketAmmo"
-	Weapon.AmmoType2 "MiniHellRocketAmmo"
-    Inventory.PickupSound "revup"
-	Tag "Hellish Missile Launcher"
-    -WEAPON.NOAUTOFIRE
-	+WEAPON.NOALERT
-   // +WEAPON.MELEEWEAPON
-	+WEAPON.DONTBOB
-	+WEAPON.NOAUTOAIM
-	Inventory.PickupMessage "You got the Revenant's Hellish Missile Launcher! (Slot 9)"
-	States
-	{
-	Steady:
-	TNT1 A 1
-	Goto Ready
-	
+	Weapon.UpSound "none"
+	Weapon.Kickback 100
+	-WEAPON.MELEEWEAPON	
+States
+{
+	LedgeClimb:
+		TNT1 A 0 A_TakeInventory("Zoomed",1)
+        TNT1 A 0 A_ZoomFactor(1.0)
+		TNT1 A 0 A_TakeInventory("ADSmode",1)
+		TNT1 A 0 A_Playsound("ledgeclimb")
+		TNT1 A 0 A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0)
+		TNT1 A 0 A_SetPitch(-5)
+		TNT1 A 0 A_GunFlash("DontFlashClimbing")
+		CL1M FDCCDFHIK 1 A_SetPitch(-4)
+		TNT1 A 0 A_TakeInventory("Climbed_Ledge", 5000)
+		TNT1 A 0 A_TakeInventory("Grabbing_A_Ledge", 5000)
+		Goto GoingToReady
+	GoingToReady:
+	SelectingAnimation:
+		  TNT1 A 0 A_JumpIfInventory("ASGSelected", 1, "SelectingAnimationAutoSG")
+		  TNT1 A 0 A_JumpIfInventory("CarbineSelected", 1, "TryToSelectDrum")
+		  TNT1 A 0 A_TakeInventory("Kicking",1)
+		  TNT1 A 0 A_TakeInventory("Salute1", 1)
+		  TNT1 A 0 A_TakeInventory("Salute2", 1)
+		  TNT1 A 0 A_TakeInventory("Taunting",1)
+		  TNT1 A 0 A_TakeInventory("DoGrenade",1)
+		  TNT1 A 0 A_TakeInventory("IsRunning",1)
+		  TNT1 A 0 A_TakeInventory("Reloading",1)
+		  TNT1 AAAA 1 A_Jump(255, "Ready3")
+		  Loop
+	TryToSelectDrum:
+		  TNT1 A 0 A_TakeInventory("Kicking",1)
+		  TNT1 A 0 A_TakeInventory("Salute1", 1)
+		  TNT1 A 0 A_TakeInventory("Salute2", 1)
+		  TNT1 A 0 A_TakeInventory("Taunting",1)
+		  TNT1 A 0 A_TakeInventory("DoGrenade",1)
+		  TNT1 A 0 A_TakeInventory("IsRunning",1)
+		  TNT1 A 0 A_TakeInventory("Reloading",1)
+		  TNT1 AAAA 1 A_Jump(255, "Ready3")
+		  TNT1 AAAA 1 A_Jump(255, "BeltReady")
+		  Loop
+	SelectingAnimationAutoSG:
+		  TNT1 A 0
+		  TNT1 A 0 A_TakeInventory("Kicking",1)
+		  TNT1 A 0 A_TakeInventory("Salute1", 1)
+		  TNT1 A 0 A_TakeInventory("Salute2", 1)
+		  TNT1 A 0 A_TakeInventory("Taunting",1)
+		  TNT1 A 0 A_TakeInventory("DoGrenade",1)
+		  TNT1 A 0 A_TakeInventory("IsRunning",1)
+		  TNT1 A 0 A_TakeInventory("Reloading",1)
+		  TNT1 A 0 A_JumpIfInventory("AutoShotgunDrumMag", 1, 5)
+		  TNT1 AAAA 1 A_Jump(255, "Ready3")
+		  TNT1 AAAA 1 A_Jump(255, "DrumReady2")
+		  Loop
+	GoingToReady2:
+		TNT1 A 2 A_JumpIfInventory("ASGSelected", 1, "GoingToReadyAutoSG")
+		TNT1 A 0 A_JumpIfInventory("CarbineSelected", 1, "TryToSelectDrum2")
+		TNT1 A 0 A_TakeInventory("Kicking",1)
+		TNT1 A 0 A_TakeInventory("Salute1", 1)
+		TNT1 A 0 A_TakeInventory("Salute2", 1)
+		TNT1 A 0 A_TakeInventory("Taunting",1)
+		TNT1 A 0 A_TakeInventory("TossGrenade",1)
+		TNT1 A 0 A_TakeInventory("IsRunning",1)
+		TNT1 A 0 A_TakeInventory("Reloading",1)
+		TNT1 AAAA 0 A_Jump(255, "SelectAnimation")
+		TNT1 AAAA 1 A_Jump(255, "Ready")
+		Loop
+	TryToSelectDrum2:
+		  TNT1 A 0 A_TakeInventory("Kicking",1)
+		  TNT1 A 0 A_TakeInventory("Salute1", 1)
+		  TNT1 A 0 A_TakeInventory("Salute2", 1)
+		  TNT1 A 0 A_TakeInventory("Taunting",1)
+		  TNT1 A 0 A_TakeInventory("DoGrenade",1)
+		  TNT1 A 0 A_TakeInventory("IsRunning",1)
+		  TNT1 A 0 A_TakeInventory("Reloading",1)
+		  TNT1 A 0 A_JumpIfInventory("LMGAmmoBelt", 1, 5)
+		  TNT1 AAAA 1 A_Jump(255, "Ready")
+		  TNT1 AAAA 1 A_Jump(255, "BeltReadyUp")
+		  Loop
+	GoingToReady2AutoSG:
+		TNT1 A 2
+		TNT1 A 0 A_TakeInventory("Kicking",1)
+		TNT1 A 0 A_TakeInventory("Salute1", 1)
+		TNT1 A 0 A_TakeInventory("Salute2", 1)
+		TNT1 A 0 A_TakeInventory("Taunting",1)
+		TNT1 A 0 A_TakeInventory("TossGrenade",1)
+		TNT1 A 0 A_TakeInventory("IsRunning",1)
+		TNT1 A 0 A_TakeInventory("Reloading",1)
+		TNT1 A 0 A_JumpIfInventory("AutoShotgunDrumMag", 1, 5)
+		TNT1 AAAA 1 A_Jump(255, "Ready")
+		TNT1 AAAA 1 A_Jump(255, "DrumReady")
+		Loop
 	NoMolotov:
 	    TNT1 A 0
 		TNT1 A 0 A_Print("No Molotovs left")
 		TNT1 A 0
-		Goto Ready+12
+		Goto GoingToReady
 		
 	ThrowMolotov:
 		TNT1 A 0 A_ZoomFactor(1.0)
@@ -50,31 +110,21 @@ Weapon.BobRangeX 0.3
 		Goto NoMolotov
 		MOLO ABCD 2
 		MOLO E 2 A_PlaySound("Afrit/Hellfire",0,2.0)
-		MOLO FGH 2
+		MOLO FGH 2 A_CustomMissile("FlameTrails")
 		MOLO I 2
 		MOLO JK 2
 		TNT1 A 0
 		TNT1 A 1
 		TNT1 A 0 A_Refire
-		HND1 I 2
+		//HND1 I 2
 		TNT1 A 0 A_TakeInventory("HandMolotovAmmo", 1)
-		HND1 J 1 A_FireCustomMissile("ThrownMolotov")
-		HND1 KLMNOPQ 2
+		THRF A 0 A_FireCustomMissile("ThrownMolotov")
+		THRF ABCDEF 2
 		TNT1 A 0 A_TakeInventory("DoMolotov", 1)
-		Goto Ready
-	
-	LedgeClimb:
-		TNT1 A 0 A_TakeInventory("Zoomed",1)
-        TNT1 A 0 A_ZoomFactor(1.0)
-		TNT1 A 0 A_TakeInventory("ADSmode",1)
-		TNT1 A 0 A_Playsound("ledgeclimb")
-		TNT1 A 0 A_FireCustomMissile("ShakeYourAssMinor", 0, 0, 0, 0)
-		TNT1 A 0 A_SetPitch(-5)
-		CL1M FDCCDFHIK 1 A_SetPitch(-4)
-		TNT1 A 0 A_TakeInventory("Climbed_Ledge", 5000)
-		TNT1 A 0 A_TakeInventory("Grabbing_A_Ledge", 5000)
-		Goto Ready+8
-
+		Goto GoingToReady2
+	Steady:
+		TNT1 A 1
+		Goto GoingToReady
 //First Person Legs in Doom (because, you know, "I'm not original")
 		FirstPersonLegsHide:
 			TNT1 A 20
@@ -141,306 +191,8 @@ Weapon.BobRangeX 0.3
 				A_OverlayOffset(-10, 0, (-pitch*2)+200);
 			}
 			Goto FirstPersonLegsStand
-
-	Ready:
-		TNT1 A 0 A_JumpIfInventory("HasRailgun",1,"Ready2")
-        TNT1 A 0 A_PlaySound("revup")
-	    RVCS DCBA 1 
-	    TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
-        TNT1 AAA 0
-        TNT1 A 0 A_JumpIfInventory("Grabbing_A_Ledge",1,"LedgeClimb")
-        TNT1 A 0 A_JumpIfInventory("Kicking",1,"DoKick")
-		TNT1 A 0 A_JumpIfInventory("DoPunch",1,"QuickPunch")
-        TNT1 A 0 A_JumpIfInventory("Taunting",1,"Taunt")
-	    TNT1 A 0 A_JumpIfInventory("Salute1", 1, "Salute")
-	    TNT1 A 0 A_JumpIfInventory("Salute2", 1, "Salute")
-	    TNT1 A 0 A_JumpIfInventory("DoGrenade", 1, "ThrowGrenade")
-		TNT1 A 0 A_JumpIfInventory("DoMolotov", 1, "ThrowMolotov")
-		TNT1 A 0 A_JumpIfInventory("DoMine", 1, "ThrowMine")
-		TNT1 A 0 A_JumpIfInventory("DoElecPod", 1, "ThrowElecPod")
-		TNT1 A 0 A_JumpIfInventory("DoSwarmPod", 1, "ThrowSwarmPod")
-		TNT1 A 0 A_JumpIfInventory("DoHealBackpack", 1, "UseHealthBackPack")
-		TNT1 A 0 A_JumpIfInventory("HasRailgun",1,"SeriouslyReady2")
-		TNT1 A 0 A_JumpIfInventory("GoWeaponSpecialAbility", 1, "WeaponSpecial")
-		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "GrabBarrel")
-	    RVCG A 1 
-			{
-				A_WeaponReady;
-				A_WeaponOffset(CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"),WOF_KEEPY);
-			}
-	    Goto Ready+8
-		
-	Ready2:
-	    TNT1 A 0
-        TNT1 A 0 A_PlaySound("revup")
-	    RVCS HGFE 1 
-	    TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
-        TNT1 AAA 0
-	SeriouslyReady2:
-        TNT1 A 0 A_JumpIfInventory("Grabbing_A_Ledge",1,"LedgeClimb")
-        TNT1 A 0 A_JumpIfInventory("Kicking",1,"DoKick")
-		TNT1 A 0 A_JumpIfInventory("DoPunch",1,"QuickPunch")
-        TNT1 A 0 A_JumpIfInventory("Taunting",1,"Taunt")
-	    TNT1 A 0 A_JumpIfInventory("Salute1", 1, "Salute")
-	    TNT1 A 0 A_JumpIfInventory("Salute2", 1, "Salute")
-	    TNT1 A 0 A_JumpIfInventory("DoGrenade", 1, "ThrowGrenade")
-		TNT1 A 0 A_JumpIfInventory("DoMolotov", 1, "ThrowMolotov")
-		TNT1 A 0 A_JumpIfInventory("DoMine", 1, "ThrowMine")
-		TNT1 A 0 A_JumpIfInventory("DoElecPod", 1, "ThrowElecPod")
-		TNT1 A 0 A_JumpIfInventory("DoSwarmPod", 1, "ThrowSwarmPod")
-		TNT1 A 0 A_JumpIfInventory("DoHealBackpack", 1, "UseHealthBackPack")
-		TNT1 A 0 A_JumpIfInventory("GoWeaponSpecialAbility", 1, "WeaponSpecial")
-		TNT1 A 0 A_JumpIfInventory("GrabbedBarrel", 1, "GrabBarrel")
-	    RVCG D 1 
-			{
-				A_WeaponReady;
-				A_WeaponOffset(CallACS("Script_GetGunOffsetX"), CallACS("Script_GetGunOffsetY"),WOF_KEEPY);
-			}
-	    Goto Ready2+8
-	
-	Deselect:
-		TNT1 A 0 A_JumpIfInventory("GotMeatShield", 1, "GrabEnemy")
-		TNT1 A 0 A_JumpIfInventory("HasRailgun",1,"Deselect2")
-	    RVCS ABCD 1 
-		TNT1 AAAAAAAAAAAAAAAAAA 0 A_Lower
-	    Wait
-	GrabEnemy:	
-	    TNT1 A 0
-	    TNT1 A 0 A_PlaySound("weapons/fistwhoosh")
-        PKUP ABCDEF 1
-		TNT1 AAAAAAAAAAAAAAAAAAA 0 A_Lower
-		Wait
-	GrabBarrel:
-		TNT1 A 0
-		TNT1 A 0 A_Takeinventory("HasUnloaded",1)
-		TNT1 A 0 A_Takeinventory("Unloading",1)
-		TNT1 A 0 A_Takeinventory("Zoomed",1)
-        TNT1 A 0 A_ZoomFactor(1.0)
-	    TNT1 A 0 A_PlaySound("weapons/fistwhoosh")
-		TNT1 A 0 A_TakeInventory("GrabbedBarrel", 1)
-		TNT1 A 0 A_TakeInventory("GrabbedBurningBarrel", 1)
-        PKUP ABCDEF 1
-		TNT1 A 0 A_SelectWeapon("BarrelThrower")
-		TNT1 AAAAAAAAAAAAAAAAAAA 0 A_Lower
-		Wait
-		
-	Deselect2:
-	    RVCS EFGH 1 
-		TNT1 AAAAAAAAAAAAAAAAAA 0 A_Lower
-		Wait
-		
-	Select:
-		TNT1 A 0 A_Overlay(-10, "FirstPersonLegsStand")
-	TNT1 A 0 A_JumpIfInventory("HasRailgun",1,"Select2")
-		TNT1 A 0 A_TakeInventory("FistsSelected",1)
-		TNT1 A 0 A_TakeInventory("RifleSelected",1)
-		TNT1 A 0 A_TakeInventory("CarbineSelected",1)
-		TNT1 A 0 A_TakeInventory("SawSelected",1)
-		TNT1 A 0 A_TakeInventory("SledgeSelected",1)
-		TNT1 A 0 A_TakeInventory("HandgunSelected",1)
-		TNT1 A 0 A_TakeInventory("DualHandgunSelected",1)
-		TNT1 A 0 A_TakeInventory("RevolverSelected",1)
-		TNT1 A 0 A_TakeInventory("ShotgunSelected",1)
-		TNT1 A 0 A_TakeInventory("SSGSelected",1)
-		TNT1 A 0 A_TakeInventory("ASGSelected",1)
-		TNT1 A 0 A_TakeInventory("QSGSelected",1)
-		TNT1 A 0 A_TakeInventory("MinigunSelected",1)
-		TNT1 A 0 A_TakeInventory("NewChaingunSelected",1)	
-		TNT1 A 0 A_TakeInventory("RocketLauncherSelected",1)
-		TNT1 A 0 A_TakeInventory("GrenadeLauncherSelected",1)
-		TNT1 A 0 A_TakeInventory("SGLSelected",1)
-		TNT1 A 0 A_TakeInventory("PlasmaGunSelected",1)
-		TNT1 A 0 A_TakeInventory("M2Selected",1)	
-		TNT1 A 0 A_TakeInventory("FreezerSelected",1)
-		TNT1 A 0 A_TakeInventory("RailGunSelected",1)
-		TNT1 A 0 A_TakeInventory("BFGSelected",1)
-		TNT1 A 0 A_TakeInventory("BFGBeamSelected",1)
-		TNT1 A 0 A_TakeInventory("BHCSelected",1)
-		TNT1 A 0 A_TakeInventory("FlameCannonSelected",1)
-		TNT1 A 0 A_TakeInventory("HellRifleSelected",1)
-		TNT1 A 0 A_TakeInventory("LandMineSelected",1)
-		TNT1 A 0 A_TakeInventory("UACSMGSelected",1)
-		TNT1 A 0 A_TakeInventory("SubMachineGunSelected",1)
-		TNT1 A 0 A_TakeInventory("LostSoulSelected",1)
-		TNT1 A 0 A_TakeInventory("HasBarrel",1)
-		TNT1 A 0 A_TakeInventory("HasBurningBarrel",1)
-		TNT1 A 0 A_GiveInventory("RevenantLauncherSelected",1)
-		TNT1 AAAAAAAAAAAAAAAAAA 0 A_Raise
-		TNT1 AAAAAAAA 1 A_Raise
-	    Wait
-		
-	Select2:
-		TNT1 A 0 A_TakeInventory("FistsSelected",1)
-		TNT1 A 0 A_TakeInventory("SawSelected",1)
-		TNT1 A 0 A_TakeInventory("SledgeSelected",1)
-		TNT1 A 0 A_TakeInventory("HandgunSelected",1)
-		TNT1 A 0 A_TakeInventory("DualHandgunSelected",1)
-		TNT1 A 0 A_TakeInventory("RevolverSelected",1)
-		TNT1 A 0 A_TakeInventory("ShotgunSelected",1)
-		TNT1 A 0 A_TakeInventory("SSGSelected",1)
-		TNT1 A 0 A_TakeInventory("ASGSelected",1)
-		TNT1 A 0 A_TakeInventory("QSGSelected",1)
-		TNT1 A 0 A_TakeInventory("MinigunSelected",1)
-		TNT1 A 0 A_TakeInventory("NewChaingunSelected",1)	
-		TNT1 A 0 A_TakeInventory("RocketLauncherSelected",1)
-		TNT1 A 0 A_TakeInventory("GrenadeLauncherSelected",1)
-		TNT1 A 0 A_TakeInventory("SGLSelected",1)
-		TNT1 A 0 A_TakeInventory("PlasmaGunSelected",1)
-		TNT1 A 0 A_TakeInventory("M2Selected",1)	
-		TNT1 A 0 A_TakeInventory("FreezerSelected",1)
-		TNT1 A 0 A_TakeInventory("RailGunSelected",1)
-		TNT1 A 0 A_TakeInventory("BFGSelected",1)
-		TNT1 A 0 A_TakeInventory("BFGBeamSelected",1)
-		TNT1 A 0 A_TakeInventory("BHCSelected",1)
-		TNT1 A 0 A_GiveInventory("RevenantLauncherSelected",1)
-		TNT1 A 0 A_TakeInventory("FlameCannonSelected",1)
-		TNT1 A 0 A_TakeInventory("HellRifleSelected",1)
-		TNT1 A 0 A_TakeInventory("LandMineSelected",1)
-		TNT1 A 0 A_TakeInventory("UACSMGSelected",1)
-		TNT1 A 0 A_TakeInventory("SubMachineGunSelected",1)
-		TNT1 A 0 A_TakeInventory("LostSoulSelected",1)
-		TNT1 A 0 A_TakeInventory("HasBarrel",1)
-		TNT1 A 0 A_TakeInventory("HasBurningBarrel",1)
-		TNT1 AAAAAAAAAAAAAAAAAA 0 A_Raise
-		TNT1 AAAAAAAA 1 A_Raise
-	    Wait
-    Spawn:
-        FATB D 1
-        Loop
-//hellishmissle/fire
-	Fire:
-		TNT1 A 0 A_WeaponOffset(0,32)
-		TNT1 A 0 A_JumpIfInventory("HasRailgun",1,"RailShot")
-	    TNT1 A 0
-	    TNT1 A 0 A_JumpIfTargetInLOS("OpenFire")
-		
-	    RVCG B 1
-	    Goto Ready+8
-	
-	RailShot:
-		TNT1 A 0 A_AlertMonsters
-		TNT1 A 0 A_Playsound("weapons/revrailgf", 2)
-		TNT1 A 0 BRIGHT A_FireCustomMissile("DoomerRevBeam", random(1,-1), 0, 8, 0)
-		TNT1 A 0 BRIGHT A_FireCustomMissile("DoomerRevBeam", random(1,-1), 1, 8, 0)
-		TNT1 A 0 A_ZoomFactor(0.97)
-		RVCF D 3 BRIGHT A_ZoomFactor(0.965)
-		TNT1 A 0 A_ZoomFactor(1.0)
-		TNT1 A 0 A_FireCustomMissile("ShakeYourAss", 0, 0, 0, 0)
-		RVCG D 20
-		TNT1 A 0 A_FireCustomMissile("RedFlare", 0, 0, 0, 0)
-		TNT1 A 0 A_TakeInventory("RevenantRocketFire1823", 2)
-		Goto Ready2+8
-		
-	AltRailShot:
-		TNT1 A 0 A_AlertMonsters
-		
-		TNT1 A 0 A_PlaySound("weapons/revrailgf", 1)
-		TNT1 A 0 BRIGHT A_FireCustomMissile("DoomerRevBeam", random(4,-4), 1, 8, 0)
-		RVCF D 1 BRIGHT 
-		RVCG D 2 BRIGHT A_ZoomFactor(0.99)
-		
-		TNT1 A 0 A_PlaySound("weapons/revrailgf", 1)
-		TNT1 A 0 BRIGHT A_FireCustomMissile("DoomerRevBeam", random(6,-6), 1, 8, 0)
-		RVCF D 1 BRIGHT 
-		RVCG D 2 BRIGHT A_ZoomFactor(0.98)
-		
-		
-		TNT1 A 0 A_PlaySound("weapons/revrailgf", 1)
-		TNT1 A 0 BRIGHT A_FireCustomMissile("DoomerRevBeam", random(8,-8), 1, 8, 0)
-		RVCF D 1 BRIGHT 
-		RVCG D 2 BRIGHT A_ZoomFactor(0.97)
-		
-		RVCG D 2 A_ZoomFactor(1.0)
-		TNT1 A 0 A_FireCustomMissile("ShakeYourAss", 0, 0, 0, 0)
-		RVCG D 22
-		TNT1 A 0 A_FireCustomMissile("RedFlare", 0, 0, 0, 0)
-		TNT1 A 0 A_TakeInventory("RevenantRocketFire1823", 4)
-		Goto Ready2+8
-		
-	OpenFire:
-	    TNT1 A 0 A_PlaySound("hellishmissle/fire", 1)
-        TNT1 A 0 A_AlertMonsters
-	    TNT1 A 0 A_JumpIfInventory("RevenantRocketFire1823", 1, "OpenFire2")
-	    TNT1 A 0 BRIGHT A_FireCustomMissile("Alerter", 0, 0, -1, 0)
-		TNT1 A 0 A_ZoomFactor(0.98)
-		
-        RVCF A 3 BRIGHT A_FireCustomMissile("DoomerRevenantSeeker3", random(4,-4), 1, -8, 0)
-		
-		TNT1 A 0 A_ZoomFactor(0.975)
-	    TNT1 A 0 A_FireCustomMissile("ShakeYourAss", 0, 0, 0, 0)
-	    RVCG A 6 A_ZoomFactor(1.0)
-	    TNT1 A 0 A_GiveInventory("RevenantRocketFire1823", 1)
-	    Goto Ready+8
-
-	OpenFire2:
-		TNT1 A 0 A_PlaySound("hellishmissle/fire", 2)
-		TNT1 A 0 A_ZoomFactor(0.98)
-		
-	    RVCF B 3 BRIGHT A_FireCustomMissile("DoomerRevenantSeeker2", random(4,-4), 1, 8, 0)
-		
-	    TNT1 A 0 A_FireCustomMissile("ShakeYourAss", 0, 0, 0, 0)
-		TNT1 A 0 A_ZoomFactor(0.975)
-	    RVCG A 6 A_ZoomFactor(1.0)
-	    TNT1 A 0 A_TakeInventory("RevenantRocketFire1823", 1)
-	    Goto Ready+8
-
-	AltFire:
-		TNT1 A 0 A_WeaponOffset(0,32)
-		TNT1 A 0 A_JumpIfInventory("HasRailgun",1,"AltRailShot")
-		TNT1 A 0 A_PlaySound("hellishmissle/fire", 1)
-        TNT1 A 0 A_AlertMonsters
-		TNT1 A 0 A_ZoomFactor(0.98)
-        RVCF A 3 BRIGHT A_FireCustomMissile("DoomerRevenantMissile2", random(4,-4), 1, -8, 0)
-		
-	    TNT1 A 0 A_FireCustomMissile("ShakeYourAss", 0, 0, 0, 0)
-		TNT1 A 0 A_ZoomFactor(0.975)
-	    RVCG A 6 A_ZoomFactor(1.0)
-		TNT1 A 0 A_ZoomFactor(0.98)
-		TNT1 A 0 A_PlaySound("hellishmissle/fire", 2)
-        RVCF B 3 BRIGHT A_FireCustomMissile("DoomerRevenantMissile3", random(4,-4), 1, 8, 0)
-		
-		TNT1 A 0 A_ZoomFactor(0.975)
-	    TNT1 A 0 A_FireCustomMissile("ShakeYourAss", 0, 0, 0, 0)
-	    RVCG A 6 A_ZoomFactor(1.0)
-	    Goto Ready+8
-		
-		WeaponSpecialPurist:
-		TNT1 A 0 A_Print("Weapon Special Not Available in Classic Mode!")
-		TNT1 A 0 A_Takeinventory("GoWeaponSpecialAbility",1)
-		Goto Ready+8
-		
-	WeaponSpecial:
-	TNT1 A 0 A_JumpIfInventory("IsPlayingAsPurist", 1, "WeaponSpecialPurist")
-	TNT1 A 0 A_StopSound
-     TNT1 A 0 A_JumpIfInventory("HasRailgun",1,"TakeRailgun")
-     TNT1 A 0 A_GiveInventory ("HasRailgun",1)
-	 TNT1 A 0 A_Takeinventory("GoWeaponSpecialAbility",1)
-     TNT1 A 0 A_PlaySound("DSBOWREL", 1)
-	 TNT1 A 0 A_Print("Firemode: Rail")
-     TNT1 A 0 A_PlaySound("REVCYC", 2)
-	 RVCS ABCD 1 
-    // TNT1 A 0 A_PlaySound("REVCYC", 3)
-	 TNT1 A 10
-	 RVCS HGFE 1 
-	 TNT1 A 0 A_Takeinventory("Reloading",1)
-     TNT1 A 0
-     Goto Ready2+8
-	 
-	 TakeRailgun:
-	 TNT1 A 0 A_Takeinventory("GoWeaponSpecialAbility",1)
-	 TNT1 A 0 A_TakeInventory ("HasRailgun",1)
-     TNT1 A 0 A_PlaySound("DSBOWREL")
-	 TNT1 A 0 A_Print("Firemode: Seeker Missile")
-     TNT1 A 0 A_PlaySound("REVCYC", 2)
-	 RVCS EFGH 1 
-     //TNT1 A 0 A_PlaySound("REVCYC", 3)
-	 TNT1 A 10
-	 RVCS DCBA 1 
-	 TNT1 A 0 A_Takeinventory("Reloading",1)
-	 TNT1 A 0
-	 Goto Ready+8
-	 
-	 UseHealthBackPack:
+		//}
+	UseHealthBackPack:
 		TNT1 A 0 A_ZoomFactor(1.0)
 		TNT1 A 0 A_TakeInventory("ADSMode", 1)
 		TNT1 A 0 A_TakeInventory("DoHealBackpack", 1)
@@ -450,7 +202,7 @@ Weapon.BobRangeX 0.3
 		SYRI A 0 A_PlaySound("misc/N_HP_pickup", 2)
 		SYRI MMMM 1
 		SYRI LKJIHGFEDCBA 1
-		Goto Ready
+		Goto GoingToReady
 		
 	ThrowSwarmPod:
 		TNT1 A 0 A_ZoomFactor(1.0)
@@ -467,13 +219,13 @@ Weapon.BobRangeX 0.3
 		XHFF A 0 A_PlaySound("MINE002", 3)
 		ELPD A 0 A_ThrowGrenade("SwarmerPodSet",4,16,3,0)
 		XHFF MNOPQRSTUVWXYZ 1
-		Goto Ready
+		Goto GoingToReady
 		
 	NoSwarmPod:	
 		TNT1 A 0
 		TNT1 A 0 A_Print("No Swarmers left")
 		TNT1 A 0
-		Goto Ready+12
+		Goto GoingToReady
 		
 	ThrowElecPod:
 		TNT1 A 0 A_ZoomFactor(1.0)
@@ -490,41 +242,14 @@ Weapon.BobRangeX 0.3
 		XHFF A 0 A_PlaySound("MINE002", 3)
 		ELPD A 0 A_ThrowGrenade("ElectricPodSet",4,16,3,0)
 		XHFF MNOPQRSTUVWXYZ 1
-		Goto Ready
+		Goto GoingToReady
 		
 	NoElecPod:	
 		TNT1 A 0
 		TNT1 A 0 A_Print("No Electropods left")
 		TNT1 A 0
-		Goto Ready+12
-	 
-		MinePurist:
-		TNT1 A 0 A_Print("Land Mines disabled in Classic Mode!")
-		TNT1 A 0 A_TakeInventory("DoMine", 1)
-		Goto Ready+12
+		Goto GoingToReady
 		
-	ThrowMine:
-		TNT1 A 0 A_ZoomFactor(1.0)
-		TNT1 A 0 A_TakeInventory("ADSMode", 1)
-		TNT1 A 0 A_TakeInventory("DoMine", 1)
-		TNT1 A 0 A_JumpIfInventory("MineAmmo", 1, 1)
-		Goto NoMine
-		XPFF FEDCBA 1
-		XPFS B 1
-		NULL A 0 A_PlaySound("weapons/pbarm", 2)
-		XPFS B 3
-		XHFF A 0 A_PlaySound("MINE002", 3)
-		TNT1 A 0 A_ThrowGrenade("ThrownProxMine",4,11,1,0)
-		TNT1 A 0 A_TakeInventory("MineAmmo", 1)
-		XHFF MNOPQRSTUVWXYZ 1
-		Goto Ready
-
-	NoMine:
-		TNT1 A 0
-		TNT1 A 0 A_Print("No Land Mines left")
-		TNT1 A 0
-		Goto Ready+12
-
 	ThrowGrenade:
 		TNT1 A 0 A_ZoomFactor(1.0)
 		TNT1 A 0 A_TakeInventory("ADSMode", 1)
@@ -542,7 +267,7 @@ Weapon.BobRangeX 0.3
 		HND1 J 1 A_FireCustomMissile("ThrownGrenade30")
 		HND1 KLMNOPQ 2
 		TNT1 A 0 A_TakeInventory("DoGrenade", 1)
-		Goto Ready
+		Goto GoingToReady2
 		
 	TossGrenade:
 		TNT1 A 1
@@ -553,157 +278,44 @@ Weapon.BobRangeX 0.3
 		TNT1 A 0 A_FireCustomMissile("ThrownGrenade15", 0,0,0,-2,0,3)
 		HND1 VWXYZ 2
 		TNT1 A 0 A_TakeInventory("DoGrenade", 1)
-		Goto Ready
+		Goto GoingToReady2
 
 	NoGrenade:
 		TNT1 A 0
 		TNT1 A 0 A_Print("No Grenades left")
 		TNT1 A 0
-		Goto Ready+12
-	Flash:
-		TNT1 A 0
-		RVCG A 15
-		Stop
-	AltFlash:
-		TNT1 A 0
-		RVCG A 19
-		Stop
-	TauntFlash:
-		TNT1 A 0
-		TNT1 A 0 A_JumpIfInventory("HasRailgun",1,"RailTauntFlash")
-		TNT1 A 0
-		RVCG A 47
-		Stop
+		Goto GoingToReady
 		
-	RailTauntFlash:
-		TNT1 A 0
-		RVCG D 47
-		Stop	
-		
-	SaluteFlash:
-		TNT1 A 0 A_JumpIfInventory("HasRailgun",1,"RailSaluteFlash")
-		TNT1 A 0
-		RVCG A 69
-		Stop
-		
-	RailSaluteFlash:
-		TNT1 A 0
-		RVCG A 69
-		Stop
+	ThrowMine:
+		TNT1 A 0 A_ZoomFactor(1.0)
+		TNT1 A 0 A_TakeInventory("ADSMode", 1)
+		TNT1 A 0 A_TakeInventory("DoMine", 1)
+		TNT1 A 0 A_JumpIfInventory("MineAmmo", 1, 1)
+		Goto NoMine
+		XPFF FEDCBA 1
+		XPFS B 1
+		NULL A 0 A_PlaySound("weapons/pbarm", 2)
+		XPFS B 3
+		XHFF A 0 A_PlaySound("MINE002", 3)
+		TNT1 A 0 A_ThrowGrenade("ThrownProxMine",4,11,1,0)
+		TNT1 A 0 A_TakeInventory("MineAmmo", 1)
+		XHFF MNOPQRSTUVWXYZ 1
+		Goto GoingToReady
 
-    FlashKicking:
-		TNT1 A 0 A_JumpIfInventory("HasRailgun",1,"RailFlashKicking")
-		RVCG A 1 
-		RVCG A 1 
-		RVCG A 1 
-		RVCG A 3 
-		RVCG A 3
-		RVCG A 3 
-		RVCG A 1 
-		RVCG A 1 
-		RVCG A 1 
-		RVCG AAA 1 
-		Stop
+	NoMine:
+		TNT1 A 0
+		TNT1 A 0 A_Print("No Land Mines left")
+		TNT1 A 0
+		Goto GoingToReady
 		
-	RailFlashKicking:
-		RVCG D 1 
-		RVCG D 1 
-		RVCG D 1 
-		RVCG D 3 
-		RVCG D 3
-		RVCG D 3 
-		RVCG D 1 
-		RVCG D 1 
-		RVCG D 1 
-		RVCG DDD 1 
-		Stop
-		
-	FlashAirKicking:
-		TNT1 A 0 A_JumpIfInventory("HasRailgun",1,"RailFlashAirKicking")
-		RVCG A 1 
-		RVCG A 1 
-		RVCG A 1 
-		RVCG A 3 
-		RVCG A 3
-		RVCG A 3 
-		RVCG A 1 
-		RVCG A 1 
-		RVCG A 1 
-		RVCG AAA 1 
-		Stop
-		
-	RailFlashAirKicking:
-		RVCG D 1 
-		RVCG D 1 
-		RVCG D 1 
-		RVCG D 3 
-		RVCG D 3
-		RVCG D 3 
-		RVCG D 1 
-		RVCG D 1 
-		RVCG D 1 
-		RVCG DDD 1 
-		Stop
-		
-	FlashSlideKicking:
-		TNT1 A 0 A_JumpIfInventory("HasRailgun",1,"RailFlashSlideKicking")
-		RVCG AA 2 
-		RVCG AAAAAAAAAAA 2  
-		Stop
-		
-	RailFlashSlideKicking:
-		RVCG DD 2 
-		RVCG DDDDDDDDDDD 2  
-		Stop
-		
-	FlashSlideKickingStop:
-		TNT1 A 0 A_JumpIfInventory("HasRailgun",1,"RailFlashSlideKickingStop")
-		RVCG AAAAAA 1 
-		RVCG A 1 
-		Stop
-		
-	RailFlashSlideKickingStop:
-		RVCG DDDDDD 1 
-		RVCG D 1 
-		Stop
-
-	FlashPunching:
-		TNT1 A 0 A_JumpIfInventory("HasRailgun",1,"RailFlashPunching")
-		RVCG A 1 
-		RVCG A 1 
-		RVCG A 1 
-		RVCG A 3 
-		RVCG A 3
-		RVCG A 3 
-		RVCG A 1 
-		RVCG A 1 
-		RVCG A 1 
-		RVCG AAA 1  
-		Stop
-		
-	RailFlashPunching:
-		RVCG D 1 
-		RVCG D 1 
-		RVCG D 1 
-		RVCG D 3 
-		RVCG D 3
-		RVCG D 3 
-		RVCG D 1 
-		RVCG D 1 
-		RVCG D 1 
-		RVCG DDD 1  
-		Stop
-		
-	////////////////////////////////////////////////KNIFE COMBO//////////////////////////////////////////////////////////////
-		
-		QuickPunchPurist:
+	QuickPunchPurist:
 		TNT1 A 0 A_Print("Knife Combos Not Allowed In Classic Mode!")
 		TNT1 A 0 A_Takeinventory("DoPunch",1)
-		Goto Ready+12
+		Goto GoingToReady
 		
 	QuickPunch:
-		TNT1 A 0 A_JumpIfInventory("IsPlayingAsPurist", 1, "QuickPunchPurist")
 		TNT1 A 0 A_Overlay(-10, "FirstPersonLegsHide")
+		TNT1 A 0 A_JumpIfInventory("IsPlayingAsPurist", 1, "QuickPunchPurist")
 		TNT1 A 0 A_JumpIfInventory("PowerStrength",1,"SuperQuickPunch")
 		TNT1 A 0 A_TakeInventory("DoPunch",1)
 		TNT1 A 0 A_GunFlash("FlashPunching")
@@ -736,7 +348,7 @@ Weapon.BobRangeX 0.3
 		TNT1 A 0 A_TakeInventory("DoPunch",1)
 		TNT1 A 0 A_TakeInventory("KnifeHasHit",1)
 		TNT1 A 0 A_TakeInventory("HasCutingWeapon", 1)
-		Goto Ready+8
+		Goto GoingToReady
 		
 	SuperQuickPunch:
 		TNT1 A 0 A_TakeInventory("DoPunch",1)
@@ -770,7 +382,7 @@ Weapon.BobRangeX 0.3
 		TNT1 A 0 A_TakeInventory("DoPunch",1)
 		TNT1 A 0 A_TakeInventory("KnifeHasHit",1)
 		TNT1 A 0 A_TakeInventory("HasCutingWeapon", 1)
-		Goto Ready+8
+		Goto GoingToReady
 		
 	KnifeCombo1:
 		TNT1 A 1 A_JumpIfInventory("DoPunch",1, 10)
@@ -780,7 +392,7 @@ Weapon.BobRangeX 0.3
 		TNT1 A 0 A_TakeInventory("DoPunch",1)
 		TNT1 A 0 A_TakeInventory("KnifeHasHit",1)
 		TNT1 A 0 A_TakeInventory("HasCutingWeapon", 1)
-		Goto Ready+8
+		Goto GoingToReady
 		TNT1 AAAAAAAAAAA 0
 		pun4 ABCDE 1
 	    TNT1 A 0 A_PlaySound("weapons/fistwhoosh", 5)
@@ -796,7 +408,7 @@ Weapon.BobRangeX 0.3
 		TNT1 A 0 A_TakeInventory("DoPunch",1)
 		TNT1 A 0 A_TakeInventory("KnifeHasHit",1)
 		TNT1 A 0 A_TakeInventory("HasCutingWeapon", 1)
-		Goto Ready//+6
+		Goto GoingToReady2//+6
 		
 	SuperKnifeCombo1:
 		TNT1 A 1 A_JumpIfInventory("DoPunch",1, 10)
@@ -806,7 +418,7 @@ Weapon.BobRangeX 0.3
 		TNT1 A 0 A_TakeInventory("DoPunch",1)
 		TNT1 A 0 A_TakeInventory("KnifeHasHit",1)
 		TNT1 A 0 A_TakeInventory("HasCutingWeapon", 1)
-		Goto Ready+8
+		Goto GoingToReady
 		TNT1 AAAAAAAAAAA 0
 		pun4 ABCDE 1
 	    TNT1 A 0 A_PlaySound("weapons/fistwhoosh", 5)
@@ -820,7 +432,7 @@ Weapon.BobRangeX 0.3
 		TNT1 A 0 A_TakeInventory("DoPunch",1)
 		TNT1 A 0 A_TakeInventory("KnifeHasHit",1)
 		TNT1 A 0 A_TakeInventory("HasCutingWeapon", 1)
-		Goto Ready//+6
+		Goto GoingToReady2//+6
 		
 	KnifeCombo2:
 		TNT1 A 1 A_JumpIfInventory("DoPunch",1, 10)
@@ -830,7 +442,7 @@ Weapon.BobRangeX 0.3
 		TNT1 A 0 A_TakeInventory("DoPunch",1)
 		TNT1 A 0 A_TakeInventory("KnifeHasHit",1)
 		TNT1 A 0 A_TakeInventory("HasCutingWeapon", 1)
-		Goto Ready//+6
+		Goto GoingToReady//+6
 		TNT1 AAAAAAAAAAA 0
 		TNT1 A 0 A_PlaySound("KNIFUP", 0)
 		TNT1 A 0 A_ZoomFactor(1.015)
@@ -855,7 +467,7 @@ Weapon.BobRangeX 0.3
 		TNT1 A 0 A_TakeInventory("DoPunch",1)
 		TNT1 A 0 A_TakeInventory("KnifeHasHit",1)
 		TNT1 A 0 A_TakeInventory("HasCutingWeapon", 1)
-		Goto Ready//+6
+		Goto GoingToReady2//+6
 		
 	SuperKnifeCombo2:
 		TNT1 A 1 A_JumpIfInventory("DoPunch",1, 10)
@@ -865,7 +477,7 @@ Weapon.BobRangeX 0.3
 		TNT1 A 0 A_TakeInventory("DoPunch",1)
 		TNT1 A 0 A_TakeInventory("KnifeHasHit",1)
 		TNT1 A 0 A_TakeInventory("HasCutingWeapon", 1)
-		Goto Ready//+6
+		Goto GoingToReady//+6
 		TNT1 AAAAAAAAAAA 0
 		TNT1 A 0 A_PlaySound("KNIFUP", 0)
 		TNT1 A 0 A_ZoomFactor(1.015)
@@ -890,7 +502,7 @@ Weapon.BobRangeX 0.3
 		TNT1 A 0 A_TakeInventory("DoPunch",1)
 		TNT1 A 0 A_TakeInventory("KnifeHasHit",1)
 		TNT1 A 0 A_TakeInventory("HasCutingWeapon", 1)
-		Goto Ready//+6
+		Goto GoingToReady2//+6
 		
 	KnifeCombo3:
 		TNT1 A 1 A_JumpIfInventory("DoPunch",1, 10)
@@ -900,7 +512,7 @@ Weapon.BobRangeX 0.3
 		TNT1 A 0 A_TakeInventory("DoPunch",1)
 		TNT1 A 0 A_TakeInventory("KnifeHasHit",1)
 		TNT1 A 0 A_TakeInventory("HasCutingWeapon", 1)
-		Goto Ready//+6
+		Goto GoingToReady//+6
 		TNT1 AAAAAAAAAAA 0
 		TNT1 A 0 A_ZoomFactor(1.015)
 		TNT1 A 0 A_PlaySound("weapons/ultrwhoosh")
@@ -924,7 +536,7 @@ Weapon.BobRangeX 0.3
 		TNT1 A 0 A_TakeInventory("DoPunch",1)
 		TNT1 A 0 A_TakeInventory("KnifeHasHit",1)
 		TNT1 A 0 A_TakeInventory("HasCutingWeapon", 1)
-		Goto Ready//+6
+		Goto GoingToReady2//+6
 		
 	SuperKnifeCombo3:
 		TNT1 A 1 A_JumpIfInventory("DoPunch",1, 10)
@@ -934,7 +546,7 @@ Weapon.BobRangeX 0.3
 		TNT1 A 0 A_TakeInventory("DoPunch",1)
 		TNT1 A 0 A_TakeInventory("KnifeHasHit",1)
 		TNT1 A 0 A_TakeInventory("HasCutingWeapon", 1)
-		Goto Ready//+6
+		Goto GoingToReady//+6
 		TNT1 AAAAAAAAAAA 0
 		TNT1 A 0 A_ZoomFactor(1.015)
 		TNT1 A 0 A_PlaySound("weapons/ultrwhoosh")
@@ -958,7 +570,7 @@ Weapon.BobRangeX 0.3
 		TNT1 A 0 A_TakeInventory("DoPunch",1)
 		TNT1 A 0 A_TakeInventory("KnifeHasHit",1)
 		TNT1 A 0 A_TakeInventory("HasCutingWeapon", 1)
-		Goto Ready//+6
+		Goto GoingToReady2//+6
 		
 	KnifeCombo4:
 		TNT1 A 1 A_JumpIfInventory("DoPunch",1, 10)
@@ -968,7 +580,7 @@ Weapon.BobRangeX 0.3
 		TNT1 A 0 A_TakeInventory("DoPunch",1)
 		TNT1 A 0 A_TakeInventory("KnifeHasHit",1)
 		TNT1 A 0 A_TakeInventory("HasCutingWeapon", 1)
-		Goto Ready//+6
+		Goto GoingToReady//+6
 		TNT1 AAAAAAAAAAA 0
 		TNT1 A 0 A_PlaySound("KNIFUP", 0)
 		TNT1 A 0 A_ZoomFactor(1.015)
@@ -993,7 +605,7 @@ Weapon.BobRangeX 0.3
 		TNT1 A 0 A_TakeInventory("DoPunch",1)
 		TNT1 A 0 A_TakeInventory("KnifeHasHit",1)
 		TNT1 A 0 A_TakeInventory("HasCutingWeapon", 1)
-		Goto Ready//+6
+		Goto GoingToReady2//+6
 		
 	SuperKnifeCombo4:
 		TNT1 A 1 A_JumpIfInventory("DoPunch",1, 10)
@@ -1003,7 +615,7 @@ Weapon.BobRangeX 0.3
 		TNT1 A 0 A_TakeInventory("DoPunch",1)
 		TNT1 A 0 A_TakeInventory("KnifeHasHit",1)
 		TNT1 A 0 A_TakeInventory("HasCutingWeapon", 1)
-		Goto Ready//+6
+		Goto GoingToReady//+6
 		TNT1 AAAAAAAAAAA 0
 		TNT1 A 0 A_PlaySound("KNIFUP", 0)
 		TNT1 A 0 A_ZoomFactor(1.015)
@@ -1028,7 +640,7 @@ Weapon.BobRangeX 0.3
 		TNT1 A 0 A_TakeInventory("DoPunch",1)
 		TNT1 A 0 A_TakeInventory("KnifeHasHit",1)
 		TNT1 A 0 A_TakeInventory("HasCutingWeapon", 1)
-		Goto Ready//+6
+		Goto GoingToReady2//+6
 		
 	KickLeft:
 		KIK1 ABC 1 A_Overlay(-10, "FirstPersonLegsHide")
@@ -1046,7 +658,7 @@ Weapon.BobRangeX 0.3
 		TNT1 A 0 A_TakeInventory("DoPunch",1)
 		TNT1 A 0 A_TakeInventory("KnifeHasHit",1)
 		TNT1 A 0 A_TakeInventory("HasCutingWeapon", 1)
-		Goto Ready
+		Goto GoingToReady2
 		
 	SuperKickLeft:
 		KIK1 ABC 1 A_Overlay(-10, "FirstPersonLegsHide")
@@ -1064,7 +676,7 @@ Weapon.BobRangeX 0.3
 		TNT1 A 0 A_TakeInventory("DoPunch",1)
 		TNT1 A 0 A_TakeInventory("KnifeHasHit",1)
 		TNT1 A 0 A_TakeInventory("HasCutingWeapon", 1)
-		Goto Ready
+		Goto GoingToReady2
 		
 	KickRight:
 		KIK2 ABC 1 A_Overlay(-10, "FirstPersonLegsHide")
@@ -1082,7 +694,7 @@ Weapon.BobRangeX 0.3
 		TNT1 A 0 A_TakeInventory("DoPunch",1)
 		TNT1 A 0 A_TakeInventory("KnifeHasHit",1)
 		TNT1 A 0 A_TakeInventory("HasCutingWeapon", 1)
-		Goto Ready
+		Goto GoingToReady2
 		
 	SuperKickRight:
 		KIK2 ABC 1 A_Overlay(-10, "FirstPersonLegsHide")
@@ -1100,12 +712,11 @@ Weapon.BobRangeX 0.3
 		TNT1 A 0 A_TakeInventory("DoPunch",1)
 		TNT1 A 0 A_TakeInventory("KnifeHasHit",1)
 		TNT1 A 0 A_TakeInventory("HasCutingWeapon", 1)
-		Goto Ready
-
+		Goto GoingToReady2
 ////////////////////////////////////////////////KNIFE COMBO//////////////////////////////////////////////////////////////
 
-
-    DoKick:
+	
+   DoKick:
 	    TNT1 A 0
 		TNT1 A 0 A_Overlay(-10, "FirstPersonLegsHide")
 		TNT1 A 0 A_TakeInventory("Zoomed",1)
@@ -1114,7 +725,7 @@ Weapon.BobRangeX 0.3
 		NULL A 0 A_JumpIf (momZ > 0, "AirKick")
 		NULL A 0 A_JumpIf (momZ < 0, "AirKick")
 		NULL A 0 A_JumpIf(Height < 54, "SlideKick")
-		TNT1 A 0 A_JumpIfInventory("PowerStrength",1,"BerserkerKick")
+        TNT1 A 0 A_JumpIfInventory("PowerStrength",1,"BerserkerKick")
 		TNT1 A 0 A_PlaySound("KICK", 1)
 		TNT1 A 0 SetPlayerProperty(0,1,0)
 		TNT1 A 0 A_GunFlash("FlashKicking")
@@ -1157,9 +768,10 @@ Weapon.BobRangeX 0.3
 		KICK A 1
 		TNT1 A 0 SetPlayerProperty(0,0,0)
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
-		Goto Ready+8
+		Goto GoingToReady
 		
 	SlideKick:
+		TNT1 A 0 A_Overlay(-10, "FirstPersonLegsHide")
 		TNT1 A 0 A_GiveInventory("IsSlideKicking", 1)
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
 		TNT1 A 0 A_Jumpifinventory("PowerStrength",1,"SuperSlideKick")
@@ -1167,7 +779,7 @@ Weapon.BobRangeX 0.3
 		TNT1 A 0 A_PlaySound("SlideKick/Start", 1)
 		TNT1 A 0 A_Recoil (-13)
 		TNT1 A 0 A_GunFlash("FlashSlideKicking")
-		NULL A 0 A_JumpIf(Height > 54, "LowerKick")
+		//NULL A 0 A_JumpIf(Height > 54, "LowerKick")
 		TNT1 A 0 A_ZoomFactor(0.95)
 		SLDK A 1 A_ZoomFactor(0.90)
 		SLDK B 1 A_ZoomFactor(0.85)
@@ -1213,7 +825,7 @@ Weapon.BobRangeX 0.3
 		SLDK HK 2
 		TNT1 A 0 ACS_Execute(5923, 0, 0, 0, 0)
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
-		Goto Ready+8
+		Goto GoingToReady
 		
 	 LowerKick:
 		TNT1 A 0 A_ZoomFactor(1.0)
@@ -1226,7 +838,7 @@ Weapon.BobRangeX 0.3
 		SLDK HK 2
 		TNT1 A 0 ACS_Execute(5923, 0, 0, 0, 0)
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
-		Goto Ready+8
+		Goto GoingToReady
 		
 	SuperSlideKick:
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
@@ -1279,7 +891,7 @@ Weapon.BobRangeX 0.3
 		SLDK HK 2
 		TNT1 A 0 ACS_Execute(5923, 0, 0, 0, 0)
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
-		Goto Ready+8
+		Goto GoingToReady
 		
     BerserkerKick:
 		TNT1 A 0 A_PlaySound("KICK", 1)
@@ -1324,9 +936,10 @@ Weapon.BobRangeX 0.3
 		KICK A 1 
 		TNT1 A 0 SetPlayerProperty(0,0,0)
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
-		Goto Ready+8
+		Goto GoingToReady
 
 	AirKick:
+		TNT1 A 0 A_Overlay(-10, "FirstPersonLegsHide")
 	    TNT1 A 0 A_jumpifinventory("PowerStrength",1,"SuperAirKick")
 		TNT1 A 0 A_PlaySound("KICK", 1)
 		TNT1 A 0 A_Recoil (-6)
@@ -1341,7 +954,7 @@ Weapon.BobRangeX 0.3
 		KICK PQRST 2
 		TNT1 A 0 A_ZoomFactor(1.0)
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
-		Goto Ready+8
+		Goto GoingToReady
 
 	SuperAirKick:
 		TNT1 A 0 A_PlaySound("KICK", 1)
@@ -1357,12 +970,11 @@ Weapon.BobRangeX 0.3
 		KICK PQRST 2
 		TNT1 A 0 A_ZoomFactor(1.0)
 		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
-		Goto Ready+8
+		Goto GoingToReady
 
     Taunt:
 		TNT1 A 0 A_TakeInventory("Zoomed", 1)
         TNT1 A 0 A_ZoomFactor(1.0)
-		TNT1 A 0 A_GunFlash("TauntFlash")
         TNT1 A 5
 		FUCK A 2
 		TNT1 A 0 BRIGHT A_FireCustomMissile("Taunter", 0, 0, -1, 0)
@@ -1373,298 +985,33 @@ Weapon.BobRangeX 0.3
 		FUCK D 15 A_TakeInventory("Taunting",1)
         FUCK CBA 5
 		TNT1 A 5
-		Goto Ready
+		Goto GoingToReady2
 	Salute:
 	    TNT1 A 0 SetPlayerProperty(0,1,0)
-	    TNT1 A 0 A_ALertMonsters
-		TNT1 A 0 A_GunFlash("SaluteFlash")
-	    SALU ABCDEDCDEDCDEDCBA 4
-	    TNT1 A 0 A_TakeInventory("Salute1",1)
-	    TNT1 A 0 A_TakeInventory("Salute2",1)
-	    TNT1 A 0 SetPlayerProperty(0,0,0)
-	    Goto Ready
-	}
+		TNT1 A 0 A_ALertMonsters
+		SALU ABCDEDCDEDCDEDCBA 4
+		TNT1 A 0 A_TakeInventory("Salute1",1)
+		TNT1 A 0 A_TakeInventory("Salute2",1)
+		TNT1 A 0 SetPlayerProperty(0,0,0)
+		Goto GoingToReady2
+	GrabEnemy:	
+	    TNT1 A 0
+	    TNT1 A 0 A_PlaySound("weapons/fistwhoosh")
+        PKUP ABCDEF 1
+		TNT1 AAAAAAAAAAAAAAAAAAA 0 A_Lower
+		Wait
+	GrabBarrel:
+		TNT1 A 0
+		TNT1 A 0 A_Takeinventory("HasUnloaded",1)
+		TNT1 A 0 A_Takeinventory("Unloading",1)
+		TNT1 A 0 A_Takeinventory("Zoomed",1)
+        TNT1 A 0 A_ZoomFactor(1.0)
+	    TNT1 A 0 A_PlaySound("weapons/fistwhoosh")
+		TNT1 A 0 A_TakeInventory("GrabbedBarrel", 1)
+		TNT1 A 0 A_TakeInventory("GrabbedBurningBarrel", 1)
+        PKUP ABCDEF 1
+		TNT1 A 0 A_SelectWeapon("BarrelThrower")
+		TNT1 AAAAAAAAAAAAAAAAAAA 0 A_Lower
+		Wait
 }
-
-ACTOR RevenantBalls66: RevenantBalls
-{
-	Damage 10
-	Speed 20
-	States
-	{
-	Spawn:
-	TNT1 A 0
-	TNT1 A 0 ThrustThingZ(0,random(20, 0),0,1)
-	Goto Spawn1
-	}
-}
-
-ACTOR RevenantMissileFriendAttackSummon
-{
-    Radius 1
-    Height 1
-    Speed 0
-	Mass 999999999999999999
-    Health 1
-    gravity 0.5
-	Decal BloodSuper
-	+NOCLIP
-	MONSTER
-	+FRIENDLY
-	+LOOKALLAROUND
-	-SHOOTABLE
-	+MISSILEMORE
-	+MISSILEEVENMORE
-    States
-    {
-    Spawn:
-	    TNT1 A 0 A_Look
-	    TNT1 AAA 0 A_Chase
-	    TNT1 AAAAAA 1 A_Chase
-		Stop
-	Missile:	
-		TNT1 A 1 A_FaceTarget
-		TNT1 A 0 A_CustomMissile("RevenantBalls66")
-        Stop
-    }
-}
-
-
-ACTOR MiniHellRocketAmmo : Ammo
-{
-   Inventory.Amount 0
-   Inventory.MaxAmount 50
-   Ammo.BackpackAmount 0
-   Ammo.BackpackMaxAmount 100
-}
-
-Actor RevenantRocketFire1823 : Inventory
-{
-inventory.maxamount 1
-}
-
-ACTOR DoomerRevenantSeeker2 : RevenantSeeker
-{
-	Damage 26
-	SeeSound "HMLF1"
-	Speed 35
-	Species "Marine"
-	+MTHRUSPECIES
-	+THRUSPECIES
-	-THRUGHOST
-	+Screenseeker
-	States
-	{
-	Spawn:
-		TNT1 A 0 A_PlaySound("weapons/rocketloop",6,1,1)
-	    TNT1 A 0 A_JumpIf(waterlevel > 1, "SpawnUnderwater")
-		FATB AB 1 BRIGHT A_SpawnItem("RedFlareSmall",0,0)
-        TNT1 A 0 A_SeekerMissile (20,30,SMF_LOOK )
-		TNT1 A 0 A_SpawnItemEx("RevenantProjectileTrails", 0, 0, 0, 0, 0, 0, 0, 128) 
-		TNT1 A 0 A_SpawnItem ("RocketSmokeTrail52")
-
-		FATB AB 1 BRIGHT A_SpawnItem("RedFlareSmall",0,0)
-        TNT1 A 0 A_SeekerMissile (20,30,SMF_LOOK )
-		TNT1 A 0 A_SpawnItemEx("RevenantProjectileTrails", 0, 0, 0, 0, 0, 0, 0, 128) 
-		TNT1 A 0 A_CustomMissile ("RocketSmokeTrail52", 2, 0, random (70, 110), 2, random (0, 360))
-		Loop
-	
-	Death:
-	    EXPL A 0 Radius_Quake (2, 54, 0, 15, 0)
-		TNT1 A 0 A_SpawnItemEx ("UnderwaterExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-		TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-		TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-		BFE1 A 0 Bright A_Explode(18, 120, 1)
-		TNT1 A 0 A_SpawnItemEx ("NewRocketExploFX_Small",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-		TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-        TNT1 A 0 A_SpawnItemEx("ExplosionParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
-		EXPL A 0
-        TNT1 AAAAA 0 A_CustomMissile ("SmallExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360))
-		TNT1 A 10
-		Stop
-	}
-}
-
-ACTOR DoomerRevenantSeeker3 : RevenantSeeker
-{
-	Damage 27
-	Speed 35
-	SeeSound "HMLF2"
-	Species "Marine"
-	+MTHRUSPECIES
-	+THRUSPECIES
-	-THRUGHOST
-	+DONTHURTSPECIES
-	+SCREENSEEKER
-	States
-	{
-	Spawn:
-		TNT1 A 0 A_PlaySound("weapons/rocketloop",6,1,1)
-	    TNT1 A 0 A_JumpIf(waterlevel > 1, "SpawnUnderwater")
-		FATB AB 1 BRIGHT A_SpawnItem("RedFlareSmall",0,0)
-        TNT1 A 0 A_SeekerMissile (20,30,SMF_LOOK )
-		TNT1 A 0 A_SpawnItemEx("RevenantProjectileTrails", 0, 0, 0, 0, 0, 0, 0, 128) 
-		TNT1 A 0 A_SpawnItem ("RocketSmokeTrail52")
-
-		FATB AB 1 BRIGHT A_SpawnItem("RedFlareSmall",0,0)
-        TNT1 A 0 A_SeekerMissile (20,30,SMF_LOOK )
-		TNT1 A 0 A_SpawnItemEx("RevenantProjectileTrails", 0, 0, 0, 0, 0, 0, 0, 128) 
-		TNT1 A 0 A_CustomMissile ("RocketSmokeTrail52", 2, 0, random (70, 110), 2, random (0, 360))
-		Loop
-		
-	Death:
-	    EXPL A 0 Radius_Quake (2, 54, 0, 15, 0)
-		TNT1 A 0 A_SpawnItemEx ("NewRocketExploFX_Small",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-		TNT1 A 0 A_SpawnItemEx ("UnderwaterExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-		TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-	TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-		BFE1 A 0 Bright A_Explode(18, 120, 1)
-		TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-        TNT1 A 0 A_SpawnItemEx("ExplosionParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
-		EXPL A 0
-        TNT1 AAAAA 0 A_CustomMissile ("SmallExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360))
-		TNT1 A 10
-		Stop
-	}
-}
-
-ACTOR DoomerRevenantMissile2 : RevenantMissile
-{
-	Damage 27
-	Speed 35
-	SeeSound "HMLF1"
-	Damagetype explosiveimpact
-	Species "Marine"
-	-MTHRUSPECIES
-	+DONTHURTSPECIES
-	States
-	{
-	Death:
-	    EXPL A 0 Radius_Quake (2, 54, 0, 15, 0)
-		TNT1 A 0 A_SpawnItemEx ("UnderwaterExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-		BFE1 A 0 Bright A_Explode(16, 120, 1)
-        TNT1 A 0 A_SpawnItemEx("ExplosionParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
-		TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-	TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-
-		EXPL A 0
-		TNT1 A 0 A_SpawnItemEx ("NewRocketExploFX_Small",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-		TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-        TNT1 AAAA 0 A_CustomMissile ("SmallExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360))
-		TNT1 A 10
-		Stop
-	}
-}
-
-ACTOR DoomerRevenantMissile3 : RevenantMissile
-{
-	Damage 27
-	Speed 35
-	SeeSound "HMLF2"
-	Damagetype explosiveimpact
-	Species "Marine"
-	-MTHRUSPECIES
-	+DONTHURTSPECIES
-	States
-	{
-	Death:
-	    EXPL A 0 Radius_Quake (2, 54, 0, 15, 0)
-		TNT1 A 0 A_SpawnItemEx ("UnderwaterExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-		BFE1 A 0 Bright A_Explode(16, 120, 1)
-        TNT1 A 0 A_SpawnItemEx("ExplosionParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
-		TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-	TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-
-		EXPL A 0
-		TNT1 A 0 A_SpawnItemEx ("NewRocketExploFX_Small",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-		TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-        TNT1 AAAA 0 A_CustomMissile ("SmallExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360))
-		TNT1 A 10
-		Stop
-	}
-}
-
-ACTOR MiniMissile1 : RevenantMissile
-{
-	Damage (random(32,34))
-	DamageType ExplosiveImpact
-	Speed 38
-	Scale 1.15
-	SeeSound "weapons/RLL"
-	States
-	{
-	Death:
-	    EXPL A 0 Radius_Quake (2, 54, 0, 15, 0)
-		TNT1 A 0 A_SpawnItemEx ("UnderwaterExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-		BFE1 A 0 Bright A_Explode(55, 125, 1)
-        TNT1 A 0 A_SpawnItemEx("ExplosionParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
-		TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-	TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-
-		EXPL A 0
-		TNT1 A 0 A_SpawnItemEx ("NewRocketExploFX_Small",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-		TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-        TNT1 AAAA 0 A_CustomMissile ("SmallExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360))
-		TNT1 A 10
-		Stop
-	}
-}
-
-ACTOR DoomerRevBeamTrail
-{
-  RenderStyle Add
-  Scale 0.08
-  Alpha 1
-  +NOINTERACTION
-  +NOGRAVITY
-  States
-  {
-  Spawn:
-    TNT1 A 0
-    TNT1 A 0 A_SetScale(ScaleX, ScaleY -0.0875)
-    YAE4 A 2 bright //A_SpawnItemEx("ObeliskTrailSpark", random(4,-4), random(4,-4), random(4,-4), 0, 0, 0, 0, 128, 0)
-    YAE4 A 2 bright
-  Trolololo:
-    YAE4 A 0 A_JumpIf(ScaleY <= 0, "NULL")
-    YAE4 A 0 A_SetScale(ScaleX -0.005, ScaleY -0.005)
-    YAE4 A 1 bright A_FadeOut(0.295)
-    Loop
-  }
-}
-
-ACTOR DoomerRevBeam : FastProjectile
-{
-  Speed 225
-  Radius 4
-  Height 4
-  Damage 12
-  Renderstyle Add
-  DamageType Blast
- // +RIPPER
-  -CANNOTPUSH
-  +NODAMAGETHRUST
-  -EXTREMEDEATH
- // +FORCERADIUSDMG
-	Species "Marine"
-	+MTHRUSPECIES
-	+THRUSPECIES
-  DeathSound "weapons/StachanovHit"
-  MissileType "DoomerRevBeamTrail"
-  MissileHeight 10
-  Decal "BFGLightning"
-  Decal "BigScorch"
-  states
-  {
-  Spawn:
-    TNT1 A 0
-    TNT1 A 1 A_PlaySound("Weapons/StachanovFly",5,1.0,1)
-    Loop
-  Death:
-    TNT1 A 0 A_PlaySound("Weapons/YamatoExp",5)
-    TNT1 A 0 A_Explode(random(18,22),8,0,0)
-    TNT1 AAAAAAAAAA 0 A_SpawnItemEx("ObeliskTrailSpark", random(19,-19), random(19,-19), random(19,-19), 0, 0, 0, 0, 128, 0)
-    TNT1 A 0 A_SpawnItemEx("ObeliskExplode",0,0,0,0,0,0,0,128,0)
-    TNT1 BCD 4
-    stop
-  }
 }
