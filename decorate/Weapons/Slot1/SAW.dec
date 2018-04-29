@@ -39,6 +39,7 @@ Inventory.PickUpSound "IGOTSAW"
 	+WEAPON.NOAUTOAIM
 	+WEAPON.AXEBLOOD
 	+WEAPON.NOALERT
+	+WEAPON.MELEEWEAPON
 	Tag "Chainsaw"
 states
 	{
